@@ -6,6 +6,8 @@ const http = require("http"); // HTTP 모듈 추가
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const testRouter = require("./test");
+
 require("dotenv").config();
 
 app.use(express.json());
@@ -23,9 +25,13 @@ app.use(cookieParser("쿠키쿠키쿠키"));
 
 app.use(morgan("dev"));
 
+app.use('/test',testRouter)
+
 // 라우터 연결
 app.get("/", (req, res) => {
-  res.send("안녕하세요 세계!");
+  res.send(`
+    <a href="/test"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcSet="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a>
+  `);
 });
 
 const HTTP_PORT = process.env.SERVER_PORT || 8080; // Node.js 애플리케이션을 8080 포트에서 실행
